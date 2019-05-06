@@ -219,7 +219,7 @@ func TestServerUnix(t *testing.T) {
 
 func testServerNetwork(t *testing.T, network, laddr string) {
 	s := NewServerNetwork(network, laddr,
-		func(conn Conn, cmd Command) {
+		func(conn Conn, cmd *Command) {
 			switch strings.ToLower(string(cmd.Args[0])) {
 			default:
 				conn.WriteError("ERR unknown command '" + string(cmd.Args[0]) + "'")
@@ -259,7 +259,7 @@ func testServerNetwork(t *testing.T, network, laddr string) {
 	}
 	go func() {
 		time.Sleep(time.Second / 4)
-		if err := ListenAndServeNetwork(network, laddr, func(conn Conn, cmd Command) {}, nil, nil); err == nil {
+		if err := ListenAndServeNetwork(network, laddr, func(conn Conn, cmd *Command) {}, nil, nil); err == nil {
 			t.Fatalf("expected an error, should not be able to listen on the same port")
 		}
 		time.Sleep(time.Second / 4)
@@ -552,5 +552,17 @@ func TestParse(t *testing.T) {
 	}
 	if string(cmd.Args[0]) != "A" {
 		t.Fatalf("expected '%v', got '%v'", "A", string(cmd.Args[0]))
+	}
+}
+
+func BenchmarkReader_ReadCommand(b *testing.B) {
+	var rd *Reader
+	buff := bytes.NewBufferString("")
+	rd = NewReader(buff)
+	s := "*3\r\n$3\r\nSET\r\n$1\r\n1\r\n$1\r\n1\r\n"
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		buff.WriteString(s)
+		rd.ReadCommand()
 	}
 }

@@ -1,0 +1,4 @@
+github.com/secmask/go-redisproto v0.0.0-20170511031412-14323b204640 h1:utEYACgQyupsNdKFRnbDScTW4vRpJxR+UGIHDwOn3LY=
+github.com/secmask/go-redisproto v0.0.0-20170511031412-14323b204640/go.mod h1:jdj5Hw1t1c0xGmYOf3Rv4sM/nhbIP3RypZ29jGZjZ5A=
+github.com/tidwall/redcon v1.0.0 h1:D4AzzJ81Afeh144fgnj5H0aSVPBBJ5RI9Rzj0zThU+E=
+github.com/tidwall/redcon v1.0.0/go.mod h1:bdYBm4rlcWpst2XMwKVzWDF9CoUxEbUmM7CQrKeOZas=
